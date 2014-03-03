@@ -8,7 +8,9 @@ AngularJS
 
 # Usage
 
-Add the `draggable` attribute to any table.
+1. Load the module `angular.module('myModule', ['dragtable']);`
+
+2. Add the `draggable` attribute to any table.
 
 Example:
 

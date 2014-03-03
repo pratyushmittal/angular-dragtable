@@ -1,13 +1,14 @@
 var project = angular.module("dragtable", []);
 
-project.directive('draggable', function($window, $document){
+project.directive('draggable', function($window, $document, $parse) {
     return function(scope, elem, attrs) {
         scope.table = elem[0];
         scope.order = [];
         scope.dragRadius2 = 100;
 
         var headers = scope.table.tHead.rows[0].cells;
-        for (var i = 0; i < headers.length; i++) {
+        var i;
+        for (i = 0; i < headers.length; i++) {
             scope.order.push(i);
             headers[i].onmousedown = dragStart;
         }
@@ -23,7 +24,9 @@ project.directive('draggable', function($window, $document){
             // Drag the entire table cell, not just the element that was clicked.
             scope.origNode = findUp(scope.origNode, /T[DH]/);
             scope.startCol = findColumn(scope.table, pos.x);
-            if (scope.startCol == -1) return;
+            if (scope.startCol === -1) {
+                return;
+            }
             var new_elt = fullCopy(scope.table, false);
             new_elt.style.margin = '0';
             // Copy the entire column
@@ -32,28 +35,32 @@ project.directive('draggable', function($window, $document){
                 forEach(sec.rows, function(row) {
                     var cell = row.cells[col];
                     var new_tr = fullCopy(row, false);
-                    if (row.offsetHeight) new_tr.style.height = row.offsetHeight + "px";
+                    if (row.offsetHeight) {
+                        new_tr.style.height = row.offsetHeight + "px";
+                    }
                     var new_td = fullCopy(cell, true);
-                    if (cell.offsetWidth) new_td.style.width = cell.offsetWidth + "px";
+                    if (cell.offsetWidth) {
+                        new_td.style.width = cell.offsetWidth + "px";
+                    }
                     new_tr.appendChild(new_td);
                     new_sec.appendChild(new_tr);
                 });
                 return new_sec;
             };
             // First the heading
-            if (scope.table.tHead)
-                new_elt.appendChild(
-                    copySectionColumn(
-                        scope.table.tHead, scope.startCol));
+            if (scope.table.tHead) {
+                new_elt.appendChild(copySectionColumn(
+                    scope.table.tHead, scope.startCol));
+            }
             forEach(scope.table.tBodies, function(tb) {
                 new_elt.appendChild(
                     copySectionColumn(
                         tb, scope.startCol));
             });
-            if (scope.table.tFoot)
-                new_elt.appendChild(
-                    copySectionColumn(
-                        scope.table.tFoot, scope.startCol));
+            if (scope.table.tFoot) {
+                new_elt.appendChild(copySectionColumn(
+                    scope.table.tFoot, scope.startCol));
+            }
             var obj_pos = absolutePosition(scope.origNode, true);
             new_elt.style.position = "absolute";
             new_elt.style.left = obj_pos.x + "px";
@@ -73,8 +80,12 @@ project.directive('draggable', function($window, $document){
             scope.cursorStartY = pos.y;
             scope.elStartLeft = parseInt(scope.elNode.style.left, 10);
             scope.elStartTop = parseInt(scope.elNode.style.top,  10);
-            if (isNaN(scope.elStartLeft)) scope.elStartLeft = 0;
-            if (isNaN(scope.elStartTop))  scope.elStartTop  = 0;
+            if (isNaN(scope.elStartLeft)) {
+                scope.elStartLeft = 0;
+            }
+            if (isNaN(scope.elStartTop)) {
+                scope.elStartTop  = 0;
+            }
             // Update element's z-index.
             scope.elNode.style.zIndex = ++scope.zIndex;
 
@@ -83,7 +94,7 @@ project.directive('draggable', function($window, $document){
             startY = event.screenY - y;
             $document.bind('mousemove', dragMove);
             $document.bind('mouseup', dragEnd);
-        };
+        }
 
         function dragMove(event) {
             // Get cursor position with respect to the page.
@@ -102,7 +113,7 @@ project.directive('draggable', function($window, $document){
             var style = scope.elNode.style;
             style.left = (scope.elStartLeft + pos.x - scope.cursorStartX) + "px";
             style.top  = (scope.elStartTop  + pos.y - scope.cursorStartY) + "px";
-        };
+        }
 
         function dragEnd() {
             $document.unbind('mousemove', dragMove);
@@ -110,19 +121,22 @@ project.directive('draggable', function($window, $document){
 
             // If the floating header wasn't added,
             // the mouse didn't move far enough.
-            if (!scope.addedNode) return;
+            if (!scope.addedNode) {
+                return;
+            }
             scope.tableContainer.removeChild(scope.elNode);
 
-            // Determine whether the drag ended over the table, 
+            // Determine whether the drag ended over the table,
             // and over which column.
             var pos = eventPosition(event);
             var table_pos = absolutePosition(scope.table);
             if (pos.y < table_pos.y ||
-                    pos.y > table_pos.y + scope.table.offsetHeight)
+                pos.y > table_pos.y + scope.table.offsetHeight) {
                 return;
+            }
             var targetCol = findColumn(scope.table, pos.x);
-            if (targetCol != -1
-                    && targetCol != scope.startCol) {
+            if (targetCol !== -1
+                && targetCol !== scope.startCol) {
                 moveColumn(scope.table,
                            scope.startCol,
                            targetCol);
@@ -130,64 +144,74 @@ project.directive('draggable', function($window, $document){
                     $start: scope.startCol,
                     $target: targetCol
                 });
+                console.log("This might not work and needs to be fixed.");
             }
-        };
+        }
 
         function moveColumn(table, sIdx, fIdx) {
             var row, cA;
             var i=table.rows.length;
-            while (i--){
-                row = table.rows[i]
+            while (i--) {
+                row = table.rows[i];
                 var x = row.removeChild(row.cells[sIdx]);
-                if (fIdx < row.cells.length)
+                if (fIdx < row.cells.length) {
                     row.insertBefore(x, row.cells[fIdx]);
-                else
+                }
+                else {
                     row.appendChild(x);
+                }
             }
 
             // For whatever reason
             // sorttable tracks column indices this way.
             var headrow = table.tHead.rows[0].cells;
-            for (var i=0; i<headrow.length; i++) {
-                headrow[i].sorttable_columnindex = i;
+            var j;
+            for (j=0; j<headrow.length; j++) {
+                headrow[j].sorttable_columnindex = j;
             }
-        };
+        }
 
         function fullCopy(elt, deep) {
             var new_elt = elt.cloneNode(deep);
             new_elt.className = elt.className;
             forEach(elt.style, function(value, key, object) {
-                if (value == null) return;
-                if (typeof(value) == "string"
-                        && value.length == 0) return;
+                if (value === null) {
+                    return;
+                }
+                if (typeof(value) === "string"
+                    && value.length === 0) {
+                        return;
+                    }
                 new_elt.style[key] = elt.style[key];
             });
             return new_elt;
-        };
+        }
 
         function findColumn(table, x) {
             var header = table.tHead.rows[0].cells;
-            for (var i = 0; i < header.length; i++) {
+            var i;
+            for (i = 0; i < header.length; i++) {
                 var pos = absolutePosition(header[i]);
                 if (pos.x <= x
-                        && x <= pos.x + header[i].offsetWidth)
-                return i;
+                    && x <= pos.x + header[i].offsetWidth){
+                    return i;
+                }
             }
             return -1;
-        };
+        }
 
         function eventPosition(event) {
             return {x: event.pageX, y: event.pageY};
-        };
+        }
 
         function absolutePosition(elt, stopAtRelative) {
             var ex = 0, ey = 0;
             do {
                 var curStyle = $window.getComputedStyle(elt, '');
                 if (stopAtRelative
-                        && curStyle.position == 'relative')
+                    && curStyle.position === 'relative') {
                     break;
-                else if (curStyle.position == 'fixed') {
+                } else if (curStyle.position === 'fixed') {
                     // Get the fixed el's offset
                     ex += parseInt(curStyle.left, 10);
                     ey += parseInt(curStyle.top, 10);
@@ -200,55 +224,68 @@ project.directive('draggable', function($window, $document){
                     ex += elt.offsetLeft;
                     ey += elt.offsetTop;
                 }
-            } while (elt = elt.offsetParent);
+                elt = elt.offsetParent;
+            } while (elt);
             return {x: ex, y: ey};
-        };
+        }
 
         function findUp(elt, tag) {
             do {
-            if (elt.nodeName && elt.nodeName.search(tag) != -1)
-                return elt;
-            } while (elt = elt.parentNode);
-        };
+                if (elt.nodeName &&
+                    elt.nodeName.search(tag) !== -1) {
+                    return elt;
+                }
+                elt = elt.parentNode;
+            } while (elt);
+        }
+
+        function fnForEach(object, block, context) {
+            var key;
+            for(key in object) {
+                if(object.hasOwnProperty(key)){
+                    block.call(context, object[key], key, object);
+                }
+            }
+        }
+
+        function strForEach(object, block, context) {
+            array = string.split("");
+            var i;
+            for (i = 0; i < array.length; i++) {
+                block.call(context, array[i], i, array);
+            }
+        }
 
         function forEach(object, block, context) {
             if (object) {
                 var resolve = Object; // default
-                if (object instanceof Function) {
+                var isObjectFunction = object instanceof Function;
+                if (!isObjectFunction
+                    && object.forEach instanceof Function) {
+                    // the object implements a custom forEach method so use that
+                    object.forEach(block, context);
+                    return;
+                }
+                if (isObjectFunction) {
                     // functions have a "length" property
                     resolve = fnForEach;
-                } else if (object.forEach instanceof Function) {
-                // the object implements a custom forEach method so use that
-                object.forEach(block, context);
-                return;
-                } else if (typeof object == "string")
+                } else if (typeof object === "string") {
                     resolve = strForEach;
-                else if (typeof object.length == "number") {
+                } else if (typeof object.length === "number") {
                     // the object is array-like
                     resolve = arForEach;
                 }
                 resolve(object, block, context);
             }
-        };
+        }
 
         function arForEach(array, block, context) {
             // array-like enumeration
-            for (var i = 0; i < array.length; i++) {
+            var i;
+            for (i = 0; i < array.length; i++) {
                 block.call(context, array[i], i, array);
             }
-        };
+        }
 
-        function fnForEach(object, block, context) {
-            for (var key in object) {
-                block.call(context, object[key], key, object);
-            }
-        };
-
-        function strForEach(object, block, context) {
-            array = string.split("");
-            for (var i = 0; i < array.length; i++) {
-                block.call(context, array[i], i, array);
-            }
-        };
-    }
+    };
 });
