@@ -1,6 +1,6 @@
 ## Demo
 
-**URL HERE**
+http://fully-faltoo.com/angular-dragtable/
 
 ## Dependencies
 
