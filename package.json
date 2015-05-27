@@ -1,13 +1,12 @@
 {
   "name": "angular-dragtable",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "draggable table columns.",
-  "main": "index.js",
   "directories": {
     "test": "test"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "./node_modules/karma/bin/karma start --single-run --browsers PhantomJS"
   },
   "repository": {
     "type": "git",
@@ -24,6 +23,8 @@
   },
   "homepage": "https://github.com/pratyushmittal/angular-dragtable",
   "devDependencies": {
+    "bower": "^1.4.1",
+    "coffee-script": "^1.9.3",
     "grunt": "^0.4.5",
     "grunt-cli": "^0.1.13",
     "grunt-contrib-coffee": "^0.13.0",
@@ -34,8 +35,10 @@
     "grunt-contrib-less": "^1.0.1",
     "grunt-contrib-uglify": "^0.9.1",
     "grunt-contrib-watch": "^0.6.1",
+    "grunt-karma": "^0.10.1",
     "jasmine-core": "^2.3.4",
     "karma": "^0.12.33",
-    "karma-jasmine": "^0.3.5"
+    "karma-jasmine": "^0.3.5",
+    "karma-phantomjs-launcher": "^0.1.4"
   }
 }
