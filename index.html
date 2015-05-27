@@ -6,6 +6,7 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
         <!-- Page CSS -->
         <link rel="stylesheet" href="styles/page.css">
+        <link rel="shortcut icon" href="https://assets-cdn.github.com/favicon.ico" type="image/x-icon" />
     </head>
     <body>
         <!-- Fixed navbar -->
@@ -18,13 +19,13 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#">angular-dragtable</a>
+                    <a class="navbar-brand" ui-sref="home">angular-dragtable</a>
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <li><a ui-sref="home">Home</a></li>
-                        <li><a ui-sref="docs">Docs</a></li>
-                        <li><a ui-sref="examples">Examples</a></li>
+                        <li ui-sref-active="active"><a ui-sref="home">Home</a></li>
+                        <li ui-sref-active="active"><a ui-sref="docs">Docs</a></li>
+                        <li ui-sref-active="active"><a ui-sref="examples">Examples</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="https://github.com/pratyushmittal/angular-dragtable">Github</a></li>
@@ -34,7 +35,7 @@
             </div>
         </nav>
         
-        <div class="container" ui-view></div>
+        <div class="main container" ui-view></div>
         
         <footer class="footer">
             <div class="container">
@@ -51,7 +52,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.15/angular-ui-router.min.js"></script>
         
         
-        <script src="https://rawgit.com/Naxmeify/angular-dragtable/release/0.1.0/src/angular.dragtable.js"></script>
+        <script src="https://rawgit.com/Naxmeify/angular-dragtable/release/0.1.0/src/angular-dragtable.js"></script>
         
         <script src="scripts/app.js"></script>
         <script src="scripts/modules/home/module.js"></script>

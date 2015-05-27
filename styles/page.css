@@ -4,7 +4,6 @@ html {
 }
 
 body {
-  padding-top: 70px;
   margin-bottom: 60px;
 }
 
@@ -20,7 +19,7 @@ body {
 /* Custom page CSS # Footer
 -------------------------------------------------- */
 
-body > .container {
+body > .main.container {
   padding: 60px 15px 0;
 }
 .container .text-muted {

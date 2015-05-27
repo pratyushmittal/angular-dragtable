@@ -11,3 +11,13 @@ angular.module('angular-dragtable-page.home').config([
         });
     }
 ]);
+
+angular.module('angular-dragtable-page.home').controller('CallbackCtrl', [
+    '$scope',
+    function ($scope) {
+        $scope.message = "";
+        $scope.drag_callback = function() {
+            alert('hi');
+        };
+    }
+]);

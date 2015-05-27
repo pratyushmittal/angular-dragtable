@@ -1,1 +1,62 @@
 <h1>Home</h1>
+
+<p>
+    DragTable is an <a href="http://angularjs.org/">AngularJS</a> 
+    directive is based upon <a href="http://www.danvk.org/wp/dragtable/">danvk's 
+    dragtable</a>. It does <b>not</b> require jQuery.
+</p>
+
+
+<h3>Demos:</h3>
+
+<p>Simple table</p>
+
+<table class="table table-bordered" draggable>
+    <thead>
+        <tr>
+            <th id="x">Name</th>
+            <th>Favorite Color</th><th>Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Dan</td>
+            <td>Blue</td><td>1984-07-12</td>
+        </tr>
+        <tr>
+            <td>Alice</td>
+            <td>Green</td><td>1980-07-22</td>
+        </tr>
+    </tbody>
+</table>
+
+<p>With callback:</p>
+<div ng-controller="CallbackCtrl">
+    <h3>{{ message }}</h3>
+    <table class="table table-bordered" draggable on-drag-end="drag_callback">
+        <thead>
+            <tr>
+                <th id="x">Name</th>
+                <th>Favorite Color</th><th>Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Dan</td>
+                <td>Blue</td><td>1984-07-12</td>
+            </tr>
+            <tr>
+                <td>Alice</td>
+                <td>Green</td><td>1980-07-22</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<h3>Usage:</h3>
+<p>To use, just add a <code>draggable</code> attribute to any table. Eg:</p>
+<pre>
+&lt;table draggable&gt;
+...
+&lt;/table&gt;
+</pre>
