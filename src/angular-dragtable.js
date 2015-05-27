@@ -265,9 +265,11 @@ angular.module('dragtable', []).value('mode', 'extension').value('version', 'v0.
         i++;
       }
     };
-    return {
-      restrict: 'A',
-      link: link
-    };
+    return link;
+
+    /*{restrict: 'A'
+        link: link
+    }
+     */
   }
 ]);

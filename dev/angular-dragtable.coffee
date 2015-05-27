@@ -258,8 +258,9 @@ angular.module 'dragtable', []
       return
             
     
-    return {
-        restrict: 'A'
+    return link
+    
+    ###{restrict: 'A'
         link: link
-    }
+    }###
 ]
