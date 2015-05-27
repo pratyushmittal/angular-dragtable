@@ -1,14 +1,13 @@
 var project = angular.module("dragtable", []);
 
 project.directive('draggable', function($window, $document) {
-    return function(scope, elem, attrs) {
+    function make_draggable(scope, elem) {
         scope.table = elem[0];
         scope.order = [];
         scope.dragRadius2 = 100;
 
         var headers = scope.table.tHead.rows[0].cells;
-        var i;
-        for (i = 0; i < headers.length; i++) {
+        for (var i = 0; i < headers.length; i++) {
             scope.order.push(i);
             headers[i].onmousedown = dragStart;
         }
@@ -134,11 +133,11 @@ project.directive('draggable', function($window, $document) {
                 moveColumn(scope.table,
                            scope.startCol,
                            targetCol);
-                scope.$eval(attrs.onDragEnd, {
+                scope.onDragEnd({
                     $start: scope.startCol,
                     $target: targetCol
                 });
-                console.log("This might not work and needs to be fixed.");
+                scope.$apply();
             }
         }
 
@@ -277,5 +276,13 @@ project.directive('draggable', function($window, $document) {
             }
         }
 
+    }
+
+    return {
+        restrict: "A",
+        scope: {
+            onDragEnd: '&'
+        },
+        link: make_draggable
     };
 });

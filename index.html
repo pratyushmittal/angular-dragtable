@@ -58,10 +58,10 @@
     </table>
 
 
-    <p>With callback:</p>
+    <p><b>With callback:</b></p>
     <div ng-controller="CallbackCtrl">
-        <h3>{{ message }}</h3>
-        <table draggable on-drag-end="drag_callback()">
+        <p>Callback Message: {{ message }}</p>
+        <table draggable on-drag-end="drag_callback($start, $target)">
             <thead>
                 <tr>
                     <th id="x">Name</th>
