@@ -16,8 +16,8 @@ angular.module('angular-dragtable-page.home').controller('CallbackCtrl', [
     '$scope',
     function ($scope) {
         $scope.message = "";
-        $scope.drag_callback = function() {
-            alert('hi');
-        };
+        $scope.drag_callback = function($start, $target) {
+            $scope.message = "Moved from " + $start + " to " + $target;
+        };;
     }
 ]);
