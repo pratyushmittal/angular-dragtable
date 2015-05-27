@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/Naxmeify/angular-dragtable.svg?branch=master)](https://travis-ci.org/Naxmeify/angular-dragtable)
+
 ## Demo
 
 http://fully-faltoo.com/angular-dragtable/
@@ -45,6 +47,21 @@ Differences from the [original DragTable][original]:
 
 
 [original]: http://www.danvk.org/wp/dragtable/
+
+## Testing
+
+Checkout master, install required npm modules for testing 
+(after install, bower will install angular and angular-mocks automatically).
+
+Then type:
+
+``` 
+$ npm test 
+```
+
+## Coverage
+
+``` npm test ``` will automatically create coverage folder with html and lcov report.
 
 ## Contribute
 
