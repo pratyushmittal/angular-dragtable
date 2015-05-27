@@ -8,6 +8,7 @@
   "description": "angular module",
   "license": "MIT",
   "devDependencies": {
-    "angular": "~1.4.0"
+    "angular": "~1.4.0",
+    "angular-mocks": "~1.4.0"
   }
 }

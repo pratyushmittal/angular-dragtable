@@ -4,5 +4,7 @@ logs
 node_modules
 bower_components
 
+coverage
+
 /.c9
 /.idea

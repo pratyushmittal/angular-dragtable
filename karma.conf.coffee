@@ -15,7 +15,10 @@ module.exports = (config) ->
 
     # list of files / patterns to load in the browser
     files: [
-      'specs/**/*.spec.coffee'
+      'bower_components/angular/angular.js'
+      'bower_components/angular-mocks/angular-mocks.js'
+      'dev/**/*.coffee',
+      'test/**/*.coffee'
     ]
 
 
@@ -27,14 +30,23 @@ module.exports = (config) ->
     # preprocess matching files before serving them to the browser
     # available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
-      '**/*.coffee': 'coffee'
+      'dev/**/*.coffee': ['coffee', 'coverage'],
+      'test/**/*.coffee': ['coffee']
     }
 
 
     # test results reporter to use
     # possible values: 'dots', 'progress'
     # available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters: ['progress']
+    reporters: ['progress', 'coverage']
+    
+    coverageReporter: {
+      dir : 'coverage/'
+      reporters: [
+        { type: 'html', subdir: 'report-html' }
+        { type: 'lcov', subdir: 'report-lcov' }
+      ]
+    }
 
 
     # web server port
@@ -72,4 +84,5 @@ module.exports = (config) ->
       'karma-jasmine'
       'karma-phantomjs-launcher'
       'karma-coffee-preprocessor'
+      'karma-coverage'
     ]

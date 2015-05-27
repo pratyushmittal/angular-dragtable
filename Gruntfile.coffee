@@ -2,12 +2,12 @@ module.exports = (grunt) ->
     grunt.initConfig
         watch:
             karma:
-                files: ['src/**/*.js', 'test/specs/**/*.coffee']
+                files: ['dev/**/*.coffee', 'test/specs/**/*.coffee']
                 tasks: ['karma:dev:run']
         # Karma
         karma:
             options:
-                configFile: 'test/karma.conf.coffee'
+                configFile: 'karma.conf.coffee'
                 runnerPort: 9999
                 browsers: ['PhantomJS']
                 
