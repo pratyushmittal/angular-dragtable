@@ -2,7 +2,7 @@ describe 'Module: dragtable', ->
   beforeEach module 'dragtable'
   
   it 'should provide a version', inject (version) ->
-    expect(version).toEqual '0.1.0'
+    expect(version).toEqual 'v0.1.0'
     
   it 'should provide a mode', inject (mode) ->
     expect(mode).toEqual 'extension'

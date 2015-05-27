@@ -1,6 +1,6 @@
 angular.module 'dragtable', []
 .value 'mode', 'extension'
-.value 'version', '0.1.0'
+.value 'version', 'v0.1.0'
 .directive 'draggable', [
   ->
     link = (scope, element, attrs) ->
@@ -11,8 +11,8 @@ angular.module 'dragtable', []
       headers = scope.table.tHead.rows[0].cells
       
       for i in headers.length
-          scope.order.push i
-          headers[i].onmousedown = dragStart
+        scope.order.push i
+        headers[i].onmousedown = dragStart
           
     dragStart = ($event) ->
       event = $event
