@@ -27,6 +27,7 @@ module.exports = (config) ->
     # preprocess matching files before serving them to the browser
     # available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
+      '**/*.coffee': 'coffee'
     }
 
 
@@ -66,3 +67,9 @@ module.exports = (config) ->
     # Continuous Integration mode
     # if true, Karma captures browsers, runs the tests and exits
     singleRun: false
+    
+    plugins: [
+      'karma-jasmine'
+      'karma-phantomjs-launcher'
+      'karma-coffee-preprocessor'
+    ]
