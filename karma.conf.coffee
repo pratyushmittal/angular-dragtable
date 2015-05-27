@@ -17,7 +17,7 @@ module.exports = (config) ->
     files: [
       'bower_components/angular/angular.js'
       'bower_components/angular-mocks/angular-mocks.js'
-      'dev/**/*.coffee',
+      'src/angular-dragtable.js',
       'test/**/*.coffee'
     ]
 
@@ -30,7 +30,7 @@ module.exports = (config) ->
     # preprocess matching files before serving them to the browser
     # available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
-      'dev/**/*.coffee': ['coffee', 'coverage'],
+      'src/angular-dragtable.js': ['coverage'],
       'test/**/*.coffee': ['coffee']
     }
 

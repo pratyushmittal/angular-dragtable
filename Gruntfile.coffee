@@ -4,7 +4,7 @@ module.exports = (grunt) ->
         
         watch:
             karma:
-                files: ['dev/**/*.coffee', 'test/specs/**/*.coffee']
+                files: ['dev/**/*.js', 'test/specs/**/*.coffee']
                 tasks: ['karma:dev:run']
         # Karma
         karma:
@@ -22,13 +22,6 @@ module.exports = (grunt) ->
                 singleRun: true
                 logLevel: 'ERROR'
                 
-                
-        coffee:
-            compile:
-                options:
-                    bare: true
-                files:
-                    'src/angular-dragtable.js': 'dev/angular-dragtable.coffee'
         uglify:
             build:
                 options:
@@ -44,5 +37,5 @@ module.exports = (grunt) ->
     grunt.loadNpmTasks 'grunt-contrib-coffee'
     grunt.loadNpmTasks 'grunt-contrib-uglify'
     
-    grunt.registerTask('default', ['coffee:compile', 'uglify:build']);
+    grunt.registerTask('default', ['uglify:build']);
     
