@@ -48,7 +48,7 @@ Differences from the [original DragTable][original]:
 
 ## Contribute
 
-1. Create issues
+1. Create issues.
 2. Fork the repository and make pull requests.
 
 ## LICENSE
