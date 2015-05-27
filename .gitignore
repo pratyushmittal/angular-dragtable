@@ -1,0 +1,7 @@
+*.log
+logs
+
+node_modules
+
+/.c9
+/.idea
