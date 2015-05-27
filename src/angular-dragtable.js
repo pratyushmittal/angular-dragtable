@@ -2,19 +2,17 @@ angular.module('dragtable', []).value('mode', 'extension').value('version', 'v0.
   function() {
     var absolutePosition, arForEach, dragEnd, dragMove, dragStart, eventPosition, findColumn, findUp, fnForEach, forEach, fullCopy, link, moveColumn, strForEach;
     link = function(scope, element, attrs) {
-      var headers, i, k, len, ref, results;
+      var headers, i, k, len, ref;
       scope.table = element[0];
       scope.order = [];
       scope.dragRadius2 = 100;
       headers = scope.table.tHead.rows[0].cells;
       ref = headers.length;
-      results = [];
       for (k = 0, len = ref.length; k < len; k++) {
         i = ref[k];
         scope.order.push(i);
-        results.push(headers[i].onmousedown = dragStart);
+        headers[i].onmousedown = dragStart;
       }
-      return results;
     };
     dragStart = function($event) {
       var copySectionColumn, event, new_elt, obj_pos, pos, startX, startY, x, y;

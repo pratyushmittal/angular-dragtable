@@ -13,6 +13,8 @@ angular.module 'dragtable', []
       for i in headers.length
         scope.order.push i
         headers[i].onmousedown = dragStart
+        
+      return
           
     dragStart = ($event) ->
       event = $event
