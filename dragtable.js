@@ -1,6 +1,6 @@
 var project = angular.module("dragtable", []);
 
-project.directive('draggable', function($window, $document, $parse) {
+project.directive('draggable', function($window, $document) {
     return function(scope, elem, attrs) {
         scope.table = elem[0];
         scope.order = [];
@@ -14,14 +14,12 @@ project.directive('draggable', function($window, $document, $parse) {
         }
 
         function dragStart($event) {
-            var event = $event;
             // Prevent default dragging of selected content
-            event.preventDefault();
+            $event.preventDefault();
 
             // Prepare the drag object
-            var x, y;
-            scope.origNode = event.target;
-            var pos = eventPosition(event);
+            scope.origNode = $event.target;
+            var pos = eventPosition($event);
             // Drag the entire table cell, not just the element that was clicked.
             scope.origNode = findUp(scope.origNode, /T[DH]/);
             scope.startCol = findColumn(scope.table, pos.x);
@@ -72,8 +70,7 @@ project.directive('draggable', function($window, $document, $parse) {
 
             // Hold off adding the element until clearly a drag.
             scope.addedNode = false;
-            scope.tableContainer = scope.table.parentNode 
-                                   || $document.body;
+            scope.tableContainer = scope.table.parentNode || $document.body;
             scope.elNode = new_elt;
 
             // Save starting positions of cursor and element.
@@ -91,21 +88,17 @@ project.directive('draggable', function($window, $document, $parse) {
             scope.elNode.style.zIndex = ++scope.zIndex;
 
             // Add listeners for movement
-            startX = event.screenX - x;
-            startY = event.screenY - y;
             $document.bind('mousemove', dragMove);
             $document.bind('mouseup', dragEnd);
         }
 
         function dragMove($event) {
-            var event = $event;
             // Get cursor position with respect to the page.
-            var pos = eventPosition(event);
+            var pos = eventPosition($event);
 
             var dx = scope.cursorStartX - pos.x;
             var dy = scope.cursorStartY - pos.y;
-            if (!scope.addedNode
-                    && dx * dx + dy * dy > scope.dragRadius2) {
+            if (!scope.addedNode && dx * dx + dy * dy > scope.dragRadius2) {
                 scope.tableContainer.insertBefore(
                         scope.elNode, scope.table);
                 scope.addedNode = true;
@@ -118,8 +111,6 @@ project.directive('draggable', function($window, $document, $parse) {
         }
 
         function dragEnd($event) {
-            var event = $event;
-            
             $document.unbind('mousemove', dragMove);
             $document.unbind('mouseup', dragEnd);
 
@@ -132,15 +123,14 @@ project.directive('draggable', function($window, $document, $parse) {
 
             // Determine whether the drag ended over the table,
             // and over which column.
-            var pos = eventPosition(event);
+            var pos = eventPosition($event);
             var table_pos = absolutePosition(scope.table);
             if (pos.y < table_pos.y ||
                 pos.y > table_pos.y + scope.table.offsetHeight) {
                 return;
             }
             var targetCol = findColumn(scope.table, pos.x);
-            if (targetCol !== -1
-                && targetCol !== scope.startCol) {
+            if (targetCol !== -1 && targetCol !== scope.startCol) {
                 moveColumn(scope.table,
                            scope.startCol,
                            targetCol);
@@ -153,7 +143,7 @@ project.directive('draggable', function($window, $document, $parse) {
         }
 
         function moveColumn(table, sIdx, fIdx) {
-            var row, cA;
+            var row;
             var i=table.rows.length;
             while (i--) {
                 row = table.rows[i];
@@ -178,12 +168,11 @@ project.directive('draggable', function($window, $document, $parse) {
         function fullCopy(elt, deep) {
             var new_elt = elt.cloneNode(deep);
             new_elt.className = elt.className;
-            forEach(elt.style, function(value, key, object) {
+            forEach(elt.style, function(value, key) {
                 if (value === null) {
                     return;
                 }
-                if (typeof(value) === "string"
-                    && value.length === 0) {
+                if (typeof(value) === "string" && value.length === 0) {
                         return;
                     }
                 new_elt.style[key] = elt.style[key];
@@ -196,24 +185,22 @@ project.directive('draggable', function($window, $document, $parse) {
             var i;
             for (i = 0; i < header.length; i++) {
                 var pos = absolutePosition(header[i]);
-                if (pos.x <= x
-                    && x <= pos.x + header[i].offsetWidth){
+                if (pos.x <= x && x <= pos.x + header[i].offsetWidth){
                     return i;
                 }
             }
             return -1;
         }
 
-        function eventPosition(event) {
-            return {x: event.pageX, y: event.pageY};
+        function eventPosition($event) {
+            return {x: $event.pageX, y: $event.pageY};
         }
 
         function absolutePosition(elt, stopAtRelative) {
             var ex = 0, ey = 0;
             do {
                 var curStyle = $window.getComputedStyle(elt, '');
-                if (stopAtRelative
-                    && curStyle.position === 'relative') {
+                if (stopAtRelative && curStyle.position === 'relative') {
                     break;
                 } else if (curStyle.position === 'fixed') {
                     // Get the fixed el's offset
@@ -253,7 +240,7 @@ project.directive('draggable', function($window, $document, $parse) {
         }
 
         function strForEach(object, block, context) {
-            array = string.split("");
+            var array = object.split("");
             var i;
             for (i = 0; i < array.length; i++) {
                 block.call(context, array[i], i, array);
@@ -264,8 +251,7 @@ project.directive('draggable', function($window, $document, $parse) {
             if (object) {
                 var resolve = Object; // default
                 var isObjectFunction = object instanceof Function;
-                if (!isObjectFunction
-                    && object.forEach instanceof Function) {
+                if (!isObjectFunction && object.forEach instanceof Function) {
                     // the object implements a custom forEach method so use that
                     object.forEach(block, context);
                     return;
