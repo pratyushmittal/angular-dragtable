@@ -6,6 +6,7 @@
     "test": "test"
   },
   "scripts": {
+    "preinstall": "./node_modules/.bin/bower install",
     "test": "./node_modules/.bin/grunt karma:ci"
   },
   "repository": {
