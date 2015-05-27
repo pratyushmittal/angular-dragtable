@@ -1,0 +1,14 @@
+{
+  "name": "angular-dragtable",
+  "version": "0.1.0",
+  "homepage": "https://github.com/pratyushmittal/angular-dragtable",
+  "authors": [
+    "pratyushmittal"
+  ],
+  "description": "angular module",
+  "license": "MIT",
+  "devDependencies": {
+    "angular": "~1.4.0",
+    "angular-mocks": "~1.4.0"
+  }
+}
