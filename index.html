@@ -61,7 +61,7 @@
     <p>With callback:</p>
     <div ng-controller="CallbackCtrl">
         <h3>{{ message }}</h3>
-        <table draggable on-drag-end="drag_callback">
+        <table draggable on-drag-end="drag_callback()">
             <thead>
                 <tr>
                     <th id="x">Name</th>
@@ -83,18 +83,25 @@
 
 
     <h3>Usage:</h3>
-    <p>To use, just add a <code>draggable</code> attribute to any table. Eg:</p>
-    <pre>
-    &lt;table draggable&gt;
-    ...
-    &lt;/table&gt;
-    </pre>
+    <ol>
+        <li>
+            Include the <code>dragtable</code> module in your Angular app: <code>var app = angular.module('demo', ['dragtable']);</code>
+        </li>
+        <li>
+            Add the <code>draggable</code> attribute to any table. Eg:
+            <pre>
+                &lt;table draggable&gt;
+                ...
+                &lt;/table&gt;
+            </pre>
+        </li>
+    </ol>
 
 
     <p>Original code by <a href="http://www.danvk.org/wp/dragtable/">Dan</a> and ported by <a href="http://fully-faltoo.com">Pratyush Mittal</a> to AngularJS.</p>
     <small>License: DragTable for AngularJS is under <a href="http://www.wtfpl.net/">WTFPL license</small>.
 
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.8/angular.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.js"></script>
 <script src="dragtable.js"></script>
 <script src="app.js"></script>
 </body>
