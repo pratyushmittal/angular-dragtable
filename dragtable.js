@@ -13,7 +13,8 @@ project.directive('draggable', function($window, $document, $parse) {
             headers[i].onmousedown = dragStart;
         }
 
-        function dragStart(event) {
+        function dragStart($event) {
+            var event = $event;
             // Prevent default dragging of selected content
             event.preventDefault();
 
@@ -96,7 +97,8 @@ project.directive('draggable', function($window, $document, $parse) {
             $document.bind('mouseup', dragEnd);
         }
 
-        function dragMove(event) {
+        function dragMove($event) {
+            var event = $event;
             // Get cursor position with respect to the page.
             var pos = eventPosition(event);
 
@@ -115,7 +117,9 @@ project.directive('draggable', function($window, $document, $parse) {
             style.top  = (scope.elStartTop  + pos.y - scope.cursorStartY) + "px";
         }
 
-        function dragEnd() {
+        function dragEnd($event) {
+            var event = $event;
+            
             $document.unbind('mousemove', dragMove);
             $document.unbind('mouseup', dragEnd);
 
