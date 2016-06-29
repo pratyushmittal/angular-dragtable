@@ -1,16 +1,22 @@
 var project = angular.module("dragtable", []);
+project.directive('draggable', function($window, $document,$timeout) {
 
-project.directive('draggable', function($window, $document) {
     function make_draggable(scope, elem) {
         scope.table = elem[0];
         scope.order = [];
         scope.dragRadius2 = 100;
 
-        var headers = scope.table.tHead.rows[0].cells;
-        for (var i = 0; i < headers.length; i++) {
-            scope.order.push(i);
-            headers[i].onmousedown = dragStart;
+        function prepareHeaders() {
+
+            var headers = scope.table.tHead.rows[0].cells;
+
+            for (var i = 0; i < headers.length; i++) {
+                scope.order.push(i);
+                headers[i].onmousedown = dragStart;
+            }
         }
+
+        $timeout(prepareHeaders, 0);
 
         function dragStart($event) {
             // Prevent default dragging of selected content
